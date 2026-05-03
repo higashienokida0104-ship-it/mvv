@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVV</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:    #1D9E75; --teal-d:  #085041; --teal-l:  #E1F5EE;
+  --purple:  #534AB7; --purple-d:#3C3489; --purple-l:#EEEDFE;
+  --amber:   #EF9F27; --amber-d: #633806; --amber-l: #FAEEDA;
+  --coral:   #D85A30; --coral-d: #712B13; --coral-l: #FAECE7;
+  --blue:    #378ADD; --blue-d:  #0C447C; --blue-l:  #E6F1FB;
+  --ink: #1A1A1A; --muted: #6B6A65; --border: #D8D6CE; --bg: #F5F4EF; --white: #FEFEFE;
+  --serif:  'Noto Serif JP', 'Cormorant Garamond', serif;
+  --en:     'Cormorant Garamond', serif;
+  --sans:   'Noto Sans JP', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+.wrapper { max-width: 680px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* HEADER */
+.site-label { font-size: 10px; font-weight: 500; letter-spacing: .2em; color: var(--muted); margin-bottom: 40px; text-transform: uppercase; }
+
+/* DIVIDER */
+.divider { height: 0.5px; background: var(--border); margin: 40px 0; }
+
+/* LAYER BLOCK */
+.layer { margin-bottom: 48px; }
+.layer-meta { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+.layer-tag { font-size: 10px; font-weight: 500; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; min-width: 72px; }
+.layer-role { font-size: 12px; color: var(--muted); }
+
+/* MAIN TEXT */
+.ja-main { font-family: var(--serif); line-height: 1.6; color: var(--ink); }
+.en-main { font-family: var(--en); font-style: italic; color: var(--muted); letter-spacing: .04em; }
+
+/* SIZES */
+.size-xl { font-size: 28px; font-weight: 600; margin-bottom: 6px; }
+.size-lg { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.size-md { font-size: 18px; font-weight: 400; margin-bottom: 4px; }
+.size-en-xl { font-size: 22px; }
+.size-en-lg { font-size: 18px; }
+.size-en-md { font-size: 15px; }
+
+/* ACCENT LINE */
+.accent-line { width: 32px; height: 2px; border-radius: 1px; margin-bottom: 20px; }
+
+/* DEFINITION */
+.definition { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 12px; padding-left: 16px; border-left: 2px solid var(--border); }
+
+/* VALUE GRID */
+.value-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+.value-item { display: flex; gap: 16px; align-items: flex-start; }
+.value-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; padding-top: 6px; }
+.value-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.value-connector { width: 1px; height: 100%; min-height: 20px; background: var(--border); flex: 1; margin-top: 4px; }
+.value-content { flex: 1; padding-bottom: 4px; }
+.value-name { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.value-name-en { font-family: var(--en); font-size: 12px; font-style: italic; color: var(--muted); margin-bottom: 5px; }
+.value-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* PRINCIPLE BOX */
+.principle { margin-top: 24px; padding: 16px 18px; border: 0.5px solid var(--blue); border-radius: 8px; background: var(--blue-l); }
+.principle-label { font-size: 10px; font-weight: 500; letter-spacing: .12em; color: var(--blue-d); text-transform: uppercase; margin-bottom: 6px; }
+.principle-text { font-size: 14px; font-weight: 500; color: var(--blue-d); margin-bottom: 4px; }
+.principle-sub  { font-size: 12px; color: var(--blue-d); opacity: .8; }
+
+/* FLOW */
+.mvv-flow { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+.flow-row { display: flex; gap: 14px; align-items: stretch; }
+.flow-left { display: flex; flex-direction: column; align-items: center; width: 20px; flex-shrink: 0; }
+.flow-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.flow-line { width: 1px; flex: 1; min-height: 20px; }
+.flow-content { flex: 1; padding-bottom: 20px; }
+.flow-layer { font-size: 10px; font-weight: 500; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+.flow-ja { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.5; margin-bottom: 3px; }
+.flow-en { font-family: var(--en); font-size: 13px; font-style: italic; color: var(--muted); }
+
+/* RICHNESS */
+.richness-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 16px; }
+.richness-card { padding: 14px 14px; border-radius: 8px; border: 0.5px solid var(--border); background: var(--white); }
+.richness-num  { font-family: var(--en); font-size: 22px; font-style: italic; color: var(--border); font-weight: 600; margin-bottom: 6px; }
+.richness-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.richness-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+/* FOOTER NOTE */
+.footnote { font-size: 11px; color: var(--muted); line-height: 1.8; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="site-label">Community MVV — Final Definition</div>
+
+  <!-- ═══ FLOW OVERVIEW ═══ -->
+  <div class="mvv-flow">
+    <div class="flow-row">
+      <div class="flow-left">
+        <div class="flow-circle" style="background:var(--teal)"></div>
+        <div class="flow-line" style="background:var(--border)"></div>
+      </div>
+      <div class="flow-content">
+        <div class="flow-layer">理念 — Why</div>
+        <div class="flow-ja">自分を知り、世界を変える。</div>
+        <div class="flow-en">Know yourself. Change the world.</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-left">
+        <div class="flow-circle" style="background:var(--purple)"></div>
+        <div class="flow-line" style="background:var(--border)"></div>
+      </div>
+      <div class="flow-content">
+        <div class="flow-layer">ビジョン — Where</div>
+        <div class="flow-ja">豊かに生きる人で、世界を満たす。</div>
+        <div class="flow-en">Fill the world with people who truly live.</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-left">
+        <div class="flow-circle" style="background:var(--amber)"></div>
+      </div>
+      <div class="flow-content">
+        <div class="flow-layer">タグライン — Identity</div>
+        <div class="flow-ja">肯定と効力感で、人生を拓く。</div>
+        <div class="flow-en">Affirm. Empower. Thrive.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ 理念 ═══ -->
+  <div class="layer">
+    <div class="layer-meta">
+      <span class="layer-tag">理念</span>
+      <span class="layer-role">Why — 存在意義。時代を超えて変わらない核。</span>
+    </div>
+    <div class="accent-line" style="background:var(--teal)"></div>
+
+    <div class="ja-main size-xl">自分を知り、世界を変える。</div>
+    <div class="en-main size-en-xl">Know yourself. Change the world.</div>
+
+    <div class="definition">
+      自己理解が起点となり、個人の変容が社会の変容につながるという信念。私的成功（自分を知る）と公的成功（世界を変える）の因果関係を一文に凝縮している。コミュニティという手段を超えた、普遍的な存在意義。
+    </div>
+  </div>
+
+  <!-- ═══ ビジョン ═══ -->
+  <div class="layer">
+    <div class="layer-meta">
+      <span class="layer-tag">ビジョン</span>
+      <span class="layer-role">Where — 行先の青写真。100年後も輝いている状態。</span>
+    </div>
+    <div class="accent-line" style="background:var(--purple)"></div>
+
+    <div class="ja-main size-xl">豊かに生きる人で、世界を満たす。</div>
+    <div class="en-main size-en-lg">Fill the world with people who truly live.</div>
+
+    <div class="definition">
+      「豊かに生きる」は到達点ではなく在り方。今この瞬間から始まる現在進行形の豊かさ。その人たちが集まることで「世界を満たす」という公的成功への連鎖が生まれる。「で」という助詞が、人の集合体でつくる世界——コミュニティの本質——を示している。
+    </div>
+
+    <div class="richness-row">
+      <div class="richness-card">
+        <div class="richness-num">01</div>
+        <div class="richness-name">感じる豊かさ</div>
+        <div class="richness-desc">自己理解・納得感・自己効力感。内側に宿る豊かさ。すべての起点。</div>
+      </div>
+      <div class="richness-card">
+        <div class="richness-num">02</div>
+        <div class="richness-name">持つ豊かさ</div>
+        <div class="richness-desc">キャリア・選択肢・人生を拓く力。感じる豊かさが土台になって初めて意味を持つ。</div>
+      </div>
+      <div class="richness-card">
+        <div class="richness-num">03</div>
+        <div class="richness-name">与える豊かさ</div>
+        <div class="richness-desc">他者への貢献・連鎖・社会を変える力。満ちた器からだけ、人は注ぐことができる。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ タグライン ═══ -->
+  <div class="layer">
+    <div class="layer-meta">
+      <span class="layer-tag">タグライン</span>
+      <span class="layer-role">Identity — ブランドの一言看板。初見で印象を残す。</span>
+    </div>
+    <div class="accent-line" style="background:var(--amber)"></div>
+
+    <div class="ja-main size-xl">肯定と効力感で、人生を拓く。</div>
+    <div class="en-main size-en-md">Affirm. Empower. Thrive.</div>
+
+    <div class="definition">
+      理念が「なぜ」、ビジョンが「どこへ」を語るのに対し、タグラインは「どんな印象を与えるか」が目的。肯定（Affirm）→ 効力感（Empower）→ 人生を拓く（Thrive）の3段階が、このコミュニティで起きる変化の順序そのものになっている。
+    </div>
+  </div>
+
+  <!-- ═══ バリュー ═══ -->
+  <div class="layer">
+    <div class="layer-meta">
+      <span class="layer-tag">バリュー</span>
+      <span class="layer-role">How — 毎日使える行動言語。場の文化をつくる。</span>
+    </div>
+    <div class="accent-line" style="background:var(--coral)"></div>
+
+    <div class="value-grid">
+      <div class="value-item">
+        <div class="value-dot-wrap">
+          <div class="value-dot" style="background:var(--teal)"></div>
+          <div class="value-connector"></div>
+        </div>
+        <div class="value-content">
+          <div class="value-name">肯定する</div>
+          <div class="value-name-en">Accept first, always</div>
+          <div class="value-desc">正しいかどうかより先に、存在を受け取る。「でも」より先に「そうなんですね」を言う。</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot-wrap">
+          <div class="value-dot" style="background:var(--purple)"></div>
+          <div class="value-connector"></div>
+        </div>
+        <div class="value-content">
+          <div class="value-name">問いで引き出す</div>
+          <div class="value-name-en">Ask, don't answer</div>
+          <div class="value-desc">答えを与えず、問いで可能性を広げる。「私はこう思う」より先に「あなたはどう感じる？」を言う。</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot-wrap">
+          <div class="value-dot" style="background:var(--amber)"></div>
+          <div class="value-connector"></div>
+        </div>
+        <div class="value-content">
+          <div class="value-name">一歩を称える</div>
+          <div class="value-name-en">Celebrate every step</div>
+          <div class="value-desc">小さな前進を見逃さず、言葉で返す。内定より手前の「今日動けた」を称えることが自己効力感を育てる。</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-dot-wrap">
+          <div class="value-dot" style="background:var(--coral)"></div>
+        </div>
+        <div class="value-content">
+          <div class="value-name">言葉にして残す</div>
+          <div class="value-name-en">Name it to own it</div>
+          <div class="value-desc">気づきを言語化し、コミュニティの資産にする。「なんとなく良かった」を「○○だから良かった」に変換することを省かない。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-label">コミュニティ設計原則</div>
+      <div class="principle-text">価値は循環する。— Give first, always</div>
+      <div class="principle-sub">受け取った肯定・問い・称える経験を、次の誰かに渡す。一人が豊かになるほど、コミュニティ全体が豊かになっていく。</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ 一貫性 ═══ -->
+  <div class="layer">
+    <div class="layer-meta">
+      <span class="layer-tag">一貫性</span>
+      <span class="layer-role">MVVを貫く一本の思想</span>
+    </div>
+    <div class="accent-line" style="background:var(--ink)"></div>
+
+    <div class="ja-main" style="font-size:15px;line-height:1.8">
+      自分を知ることが感じる豊かさになり、<br>
+      感じる豊かさが持つ豊かさを生み、<br>
+      持つ豊かさが与える豊かさへと還る。<br>
+      その連鎖が、世界を満たしていく。
+    </div>
+
+    <div class="footnote" style="margin-top:16px">
+      理念が <strong>起点</strong>（自分を知り）、ビジョンが <strong>行先</strong>（豊かに生きる人で世界を満たす）、タグラインが <strong>手段</strong>（肯定と効力感で拓く）、バリューが <strong>行動</strong>（肯定・問い・称える・残す）として完全に役割分担されている。どの一文も、他の三文なしでは語れない構造。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
